@@ -99,18 +99,27 @@ list *construct(list *this_list, void (*print)(const void *),
 list *destruct(list *this_list) {
   if (this_list) {
     // List is constructed. Go ahed and destruct it.
-    if (!remove_all(this_list)) {
-      // Removed all the node present in the list.
-      free(this_list);
-      this_list = NULL;
+    if (this_list->head) {
+      // List is not empty.
+      if (!remove_all(this_list)) {
+        // Removed all the node present in the list.
+      } else {
+        // Did not removed all the node present in the list.
+        fprintf(stderr,
+                "ERROR(" __FILE__
+                ":%d): unable to destruct the list for since cannot removed "
+                "all the element ...\n",
+                __LINE__);
+        return NULL;
+      }
     } else {
-      // Did not removed all the node present in the list.
-      // Or it may be empty list.
       fprintf(stderr,
               "ERROR(" __FILE__
-              ":%d): unable to destruct the list for some reason ...\n",
+              ":%d): it looks likes list is already empty ...\n",
               __LINE__);
     }
+    free(this_list);
+    this_list = NULL;
   } else {
     // List is not constructed.
     fprintf(stderr,
@@ -414,7 +423,9 @@ void display(list *this_list) {
       }
       printf("\n");
     } else {
-      fprintf(stderr, " list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   } else {
     fprintf(stderr,
@@ -465,7 +476,9 @@ node *get_begin(list *this_list) {
       // List is not empty.
       return this_list->head;
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   }
   return NULL;
@@ -479,7 +492,9 @@ node *get_end(list *this_list) {
     if (this_list->head) {
       return this_list->tail;
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   }
   return NULL;
@@ -522,7 +537,9 @@ node *get_before(list *this_list, node *this_node) {
       // Finally I have found the given node.
       return curr;
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   } else {
     fprintf(stderr,
@@ -562,7 +579,9 @@ node *get_after(list *this_list, node *this_node) {
       // Finally I have found the given node.
       return curr->next;
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   } else {
     fprintf(stderr,
@@ -597,7 +616,9 @@ node *find_the_key(list *this_list, void *data) {
         }
       }
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   } else {
     fprintf(stderr,
@@ -615,27 +636,30 @@ node *find_the_key(list *this_list, void *data) {
 /**
  * Find the address of node according to its index present in the list.
  */
-node *find_at_index(list *this_list, size_t size) {
+node *find_at_index(list *this_list, size_t index) {
   if (this_list) {
     // List is constructed. Go ahed.
     if (this_list->head) {
       // List is not empty. Go ahed.
       node *curr = this_list->head;
-      size_t index = 0;
-      while (index < size) {
-        if (!curr->next) {
+      size_t current_index = 0;
+      while (current_index < index) {
+        if (curr->next == NULL) {
           // It looks like I have traverse the entire list but unable to find
           // the given node in the list.
           // I better abort this operation since the given node is not a valid
           // node present in the list.
           return NULL;
         } else {
+          ++current_index;
           curr = curr->next;
         }
       }
       return curr;
     } else {
-      fprintf(stderr, "ERROR: list is empty ...\n");
+      fprintf(stderr,
+              "ERROR(" __FILE__ ":%d): it looks likes list is empty ...\n",
+              __LINE__);
     }
   } else {
     fprintf(stderr,
@@ -645,7 +669,7 @@ node *find_at_index(list *this_list, size_t size) {
     fprintf(stderr,
             "ERROR:(" __FILE__
             ":%d): trying to find address of node at particualar index does "
-            "not make any sense...\n",
+            "not make any sense ...\n",
             __LINE__);
   }
   return NULL;
@@ -664,7 +688,7 @@ size_t get_size(list *this_list) {
             __LINE__);
     fprintf(stderr,
             "ERROR:(" __FILE__
-            ":%d): trying to find its size does not make any sense...\n",
+            ":%d): trying to find its size does not make any sense ...\n",
             __LINE__);
   }
   return -1;
