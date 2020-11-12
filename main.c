@@ -13,41 +13,14 @@ int main(void) {
   }
   // Displaying the content of the list.
   display(p);
-  // Finding out where head is pointing.
-  node *ptr;
-  if ((ptr = get_begin(p))) {
-    printf("head is pointing to data member: %d\n", *(int *)get_data(ptr));
+  int i = reverse(p);
+  if (!i) {
+    printf("successfully reverse the list\n");
   } else {
-    printf("list is empty.\n");
+    printf("unsuccessful reversing the list.\n");
   }
-  // Finding out where tail is pointing.
-  if ((ptr = get_end(p))) {
-    printf("tail is pointing to data member: %d\n", *(int *)get_data(ptr));
-  } else {
-    printf("list is empty.\n");
-  }
-  // Deleting the node particular node.
-  int d = 15;
-  printf("Removing the data %d form the list\n", d);
-  ptr = find_the_key(p, &d);
-  remove_current(p, ptr);
-  display(p);
-  node *data;
-  // Finding the key at particular index.
-  d = 17;
-  printf("Finding the key at particular index %d\n", d);
-  if ((data = find_at_index(p, d))) {
-    printf("data at %d is %d\n", d, *(int *)get_data(data));
-  } else {
-    printf("index not present in the list.\n");
-  }
-  // Removing all the node present in the list.
-  printf("Removing all the node present in the list.\n");
-  remove_all(p);
-  display(p);
-  // Destructing the list.
-  printf("Destructing the entire list.\n");
-  p = destruct(p);
+  printf("head = %d\n", *(int *)get_data(get_begin(p)));
+  printf("end = %d\n", *(int *)get_data(get_end(p)));
   display(p);
   return 0;
 }

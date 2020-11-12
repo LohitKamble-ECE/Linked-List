@@ -693,6 +693,10 @@ size_t get_size(list *this_list) {
   }
   return -1;
 }
+/**
+ * Reverses the entire list.
+ * Modify the iterator.
+ */
 static void __reverse(list *this_list, node *this_node) {
   if (this_node->next->next) {
     // Keep traversing all the way till end of the list.
@@ -710,6 +714,9 @@ static void __reverse(list *this_list, node *this_node) {
   // current first node of the list as the tail node.
   this_list->tail = this_node;
 }
+/**
+ * Reverse the list
+ */
 int reverse(list *this_list) {
   if (this_list) {
     // List is constructed. Go ahed and reverse it.

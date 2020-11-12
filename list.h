@@ -16,23 +16,25 @@ typedef struct __list {
 } list;
 typedef list *LIST;
 // Modify Interface.
-list *construct(list *this_list, void (*print)(const void *),
-                int (*compare)(const void *, const void *));
-list *destruct(list *this_list);
-int insert_after(list *this_list, node *this_node, void *data, size_t size);
-int insert_before(list *this_list, node *this_node, void *data, size_t size);
-int remove_current(list *this_list, node *this_node);
-int remove_all(list *this_list);
-void display(list *this_list);
-int reverse(list *this_list);
+extern list *construct(list *this_list, void (*print)(const void *),
+                       int (*compare)(const void *, const void *));
+extern list *destruct(list *this_list);
+extern int insert_after(list *this_list, node *this_node, void *data,
+                        size_t size);
+extern int insert_before(list *this_list, node *this_node, void *data,
+                         size_t size);
+extern int remove_current(list *this_list, node *this_node);
+extern int remove_all(list *this_list);
+extern void display(list *this_list);
+extern int reverse(list *this_list);
 // Access Interface.
-int is_empty(list *this_list);
-size_t get_size(list *this_list);
-node *get_begin(list *this_list);
-node *get_end(list *this_list);
-void *get_data(node *this_node);
-node *get_before(list *this_list, node *this_node);
-node *get_after(list *this_list, node *this_node);
-node *find_the_key(list *this_list, void *data);
-node *find_at_index(list *this_list, size_t index);
+extern int is_empty(list *this_list);
+extern size_t get_size(list *this_list);
+extern node *get_begin(list *this_list);
+extern node *get_end(list *this_list);
+extern void *get_data(node *this_node);
+extern node *get_before(list *this_list, node *this_node);
+extern node *get_after(list *this_list, node *this_node);
+extern node *find_the_key(list *this_list, void *data);
+extern node *find_at_index(list *this_list, size_t index);
 #endif
