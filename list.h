@@ -24,6 +24,7 @@ int insert_before(list *this_list, node *this_node, void *data, size_t size);
 int remove_current(list *this_list, node *this_node);
 int remove_all(list *this_list);
 void display(list *this_list);
+int reverse(list *this_list);
 // Access Interface.
 int is_empty(list *this_list);
 size_t get_size(list *this_list);

@@ -693,3 +693,43 @@ size_t get_size(list *this_list) {
   }
   return -1;
 }
+static void __reverse(list *this_list, node *this_node) {
+  if (this_node->next->next) {
+    // Keep traversing all the way till end of the list.
+    __reverse(this_list, this_node->next);
+  } else {
+    // We are at one previous the last node of the list.
+    // Making the previous end node as the head node of the list.
+    this_list->head = this_node->next;
+  }
+  this_node->next->next = this_node;
+  // Making current next member node as null, so eventually it will make
+  // current first node next member as null
+  this_node->next = NULL;
+  // Making the current node as tail of the list, so eventually it will make
+  // current first node of the list as the tail node.
+  this_list->tail = this_node;
+}
+int reverse(list *this_list) {
+  if (this_list) {
+    // List is constructed. Go ahed and reverse it.
+    if (this_list->head) {
+      // List is not empty.
+      __reverse(this_list, this_list->head);
+      return 0;
+    } else {
+      fprintf(stderr, "ERROR: (" __FILE__ ":%d): it looks like list is empty\n",
+              __LINE__);
+    }
+  } else {
+    fprintf(stderr,
+            "ERROR:(" __FILE__
+            ":%d): it looks like you have not constructed this list yet ...\n",
+            __LINE__);
+    fprintf(stderr,
+            "ERROR:(" __FILE__
+            ":%d): trying to reverse it does not make any sense ...\n",
+            __LINE__);
+  }
+  return -1;
+}
